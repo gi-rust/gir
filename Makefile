@@ -12,14 +12,11 @@ clean:
 
 .PHONY: all clean
 
-src/glib: .gitmodules
+src/glib/autogen.sh:
 	git submodule update --init src/glib
 
-src/gobject-introspection: .gitmodules
+src/gobject-introspection/autogen.sh:
 	git submodule update --init src/gobject-introspection
-
-src/glib/autogen.sh: | src/glib
-src/gobject-introspection/autogen.sh: | src/gobject-introspection
 
 src/glib/configure: src/glib/autogen.sh
 	cd src/glib && NOCONFIGURE=1 ./autogen.sh
