@@ -29,15 +29,7 @@ build/glib/Makefile: src/glib/configure
 	cd build/glib && \
 	  ../../src/glib/configure --prefix=$(abs_build_installdir)
 
-.PHONY: update-submodule-glib update-submodule-gobject-introspection
-
-update-submodule-glib:
-	git submodule update src/glib
-
-update-submodule-gobject-introspection:
-	git submodule update src/gobject-introspection
-
-build/.glib.build-stamp: .gitmodules build/glib/Makefile | update-submodule-glib
+build/.glib.build-stamp: build/glib/Makefile
 	$(MAKE) -C build/glib && touch $@
 
 build/.glib.install-stamp: build/.glib.build-stamp
@@ -50,11 +42,6 @@ build/gobject-introspection/Makefile: src/gobject-introspection/configure build/
 	    --prefix=$(abs_build_installdir) \
 	    --with-glib-src=../../src/glib
 
-build/gobject-introspection/g-ir-annotation-tool: .gitmodules build/gobject-introspection/Makefile | update-submodule-gobject-introspection
-	# Work around an issue with parallel builds
-	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C build/gobject-introspection scannerparser.h
-	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C build/gobject-introspection g-ir-annotation-tool
-
 $(GLIB_GIRFILES): %.gir: build/gobject-introspection/%.gir
 	install -m644 $< $@
 
@@ -64,7 +51,10 @@ $(glib_gir_srcfiles): build/.glib.build-stamp | update-glib-annotations
 
 .PHONY: update-glib-annotations
 
-update-glib-annotations: build/.glib.build-stamp update-submodule-gobject-introspection build/gobject-introspection/g-ir-annotation-tool
+update-glib-annotations: build/.glib.build-stamp build/gobject-introspection/Makefile
+	# Work around an issue with parallel builds
+	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C build/gobject-introspection scannerparser.h
+	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C build/gobject-introspection g-ir-annotation-tool
 	cd src/gobject-introspection/misc && \
 	  $(PKG_CONFIG_ENVIRONMENT) ./update-glib-annotations.py ../../glib ../../../build/gobject-introspection
 
