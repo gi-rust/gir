@@ -1,5 +1,8 @@
-GLIB_GIRFILES = GLib-2.0.gir GObject-2.0.gir GModule-2.0.gir Gio-2.0.gir
-GLIB_PACKAGES = glib-2.0 gobject-2.0 gmodule-2.0 gio-2.0
+GLIB_NAMESPACES = GLib-2.0 GObject-2.0 GModule-2.0 Gio-2.0
+GLIB_GIRFILES = $(foreach ns,$(GLIB_NAMESPACES),$(ns).gir)
+GLIB_PACKAGES := $(shell echo $(GLIB_NAMESPACES) | tr A-Z a-z)
+
+submodules = src/glib src/gobject-introspection
 
 abs_build_installdir = $(abspath build/installed)
 
@@ -12,17 +15,15 @@ clean:
 
 .PHONY: all clean
 
-src/glib/autogen.sh:
-	git submodule update --init src/glib
+autogen_submodules = src/glib src/gobject-introspection
+autogen_scripts = $(foreach mod,$(autogen_submodules),$(mod)/autogen.sh)
+configure_scripts = $(foreach mod,$(autogen_submodules),$(mod)/configure)
 
-src/gobject-introspection/autogen.sh:
-	git submodule update --init src/gobject-introspection
+$(autogen_scripts):
+	git submodule update --init $(dir $@)
 
-src/glib/configure: src/glib/autogen.sh
-	cd src/glib && NOCONFIGURE=1 ./autogen.sh
-
-src/gobject-introspection/configure: src/gobject-introspection/autogen.sh
-	cd src/gobject-introspection && NOCONFIGURE=1 ./autogen.sh
+$(configure_scripts): %/configure: %/autogen.sh
+	cd $(dir $@) && NOCONFIGURE=1 ./autogen.sh
 
 build/glib/Makefile: src/glib/configure
 	mkdir -p build/glib
@@ -58,14 +59,18 @@ update-glib-annotations: build/.glib.build-stamp build/gobject-introspection/Mak
 	cd src/gobject-introspection/misc && \
 	  $(PKG_CONFIG_ENVIRONMENT) ./update-glib-annotations.py ../../glib ../../../build/gobject-introspection
 
+define build_gir
+	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C build/gobject-introspection $(notdir $@)
+endef
+
 build/gobject-introspection/GLib-2.0.gir: src/gobject-introspection/gir/glib-2.0.c build/.glib.install-stamp
-	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C build/gobject-introspection GLib-2.0.gir
+	$(build_gir)
 
 build/gobject-introspection/GObject-2.0.gir: src/gobject-introspection/gir/gobject-2.0.c build/gobject-introspection/GLib-2.0.gir build/.glib.install-stamp
-	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C build/gobject-introspection GObject-2.0.gir
+	$(build_gir)
 
 build/gobject-introspection/GModule-2.0.gir: src/gobject-introspection/gir/gmodule-2.0.c build/gobject-introspection/GLib-2.0.gir build/.glib.install-stamp
-	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C build/gobject-introspection GModule-2.0.gir
+	$(build_gir)
 
 build/gobject-introspection/Gio-2.0.gir: src/gobject-introspection/gir/gio-2.0.c build/gobject-introspection/GObject-2.0.gir build/.glib.install-stamp
-	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C build/gobject-introspection Gio-2.0.gir
+	$(build_gir)
