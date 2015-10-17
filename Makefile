@@ -45,7 +45,7 @@ build/gobject-introspection/Makefile: src/gobject-introspection/configure build/
 $(GLIB_GIRFILES): %.gir: build/gobject-introspection/%.gir
 	install -m644 $< $@
 
-glib_gir_srcfiles = $(foreach lib,$(GLIB_PACKAGES),build/gobject-introspection/gir/$(lib).c)
+glib_gir_srcfiles = $(foreach lib,$(GLIB_PACKAGES),src/gobject-introspection/gir/$(lib).c)
 
 $(glib_gir_srcfiles): build/.glib.build-stamp | update-glib-annotations
 
@@ -58,14 +58,14 @@ update-glib-annotations: build/.glib.build-stamp build/gobject-introspection/Mak
 	cd src/gobject-introspection/misc && \
 	  $(PKG_CONFIG_ENVIRONMENT) ./update-glib-annotations.py ../../glib ../../../build/gobject-introspection
 
-build/gobject-introspection/GLib-2.0.gir: build/gobject-introspection/gir/glib-2.0.c build/.glib.install-stamp
+build/gobject-introspection/GLib-2.0.gir: src/gobject-introspection/gir/glib-2.0.c build/.glib.install-stamp
 	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C build/gobject-introspection GLib-2.0.gir
 
-build/gobject-introspection/GObject-2.0.gir: build/gobject-introspection/gir/gobject-2.0.c build/gobject-introspection/GLib-2.0.gir build/.glib.install-stamp
+build/gobject-introspection/GObject-2.0.gir: src/gobject-introspection/gir/gobject-2.0.c build/gobject-introspection/GLib-2.0.gir build/.glib.install-stamp
 	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C build/gobject-introspection GObject-2.0.gir
 
-build/gobject-introspection/GModule-2.0.gir: build/gobject-introspection/gir/gmodule-2.0.c build/gobject-introspection/GLib-2.0.gir build/.glib.install-stamp
+build/gobject-introspection/GModule-2.0.gir: src/gobject-introspection/gir/gmodule-2.0.c build/gobject-introspection/GLib-2.0.gir build/.glib.install-stamp
 	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C build/gobject-introspection GModule-2.0.gir
 
-build/gobject-introspection/Gio-2.0.gir: build/gobject-introspection/gir/gio-2.0.c build/gobject-introspection/GObject-2.0.gir build/.glib.install-stamp
+build/gobject-introspection/Gio-2.0.gir: src/gobject-introspection/gir/gio-2.0.c build/gobject-introspection/GObject-2.0.gir build/.glib.install-stamp
 	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C build/gobject-introspection Gio-2.0.gir
