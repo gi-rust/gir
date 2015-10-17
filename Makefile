@@ -14,7 +14,7 @@ all: update-glib-annotations
 	$(MAKE) -f Makefile.gir
 
 clean:
-	rm -r build
+	-rm -r build
 
 .PHONY: all clean
 
