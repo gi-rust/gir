@@ -39,7 +39,9 @@ build-install-glib: build/glib/Makefile
 	$(MAKE) -C build/glib
 	$(MAKE) -C build/glib install INSTALL='install -p'
 
-build/gobject-introspection/Makefile: src/gobject-introspection/configure build-install-glib
+build/installed/lib/pkgconfig/*.pc: build-install-glib
+
+build/gobject-introspection/Makefile: src/gobject-introspection/configure build/installed/lib/pkgconfig/*.pc
 	mkdir -p build/gobject-introspection
 	cd build/gobject-introspection && \
 	  $(PKG_CONFIG_ENVIRONMENT) ../../src/gobject-introspection/configure \
