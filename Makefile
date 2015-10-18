@@ -37,7 +37,7 @@ build/glib/Makefile: src/glib/configure
 
 build-install-glib: build/glib/Makefile
 	$(MAKE) -C build/glib
-	$(MAKE) -C build/glib install
+	$(MAKE) -C build/glib install INSTALL='install -p'
 
 build/gobject-introspection/Makefile: src/gobject-introspection/configure build-install-glib
 	mkdir -p build/gobject-introspection
