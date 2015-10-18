@@ -21,7 +21,7 @@ $(configure_scripts): %/configure: %/autogen.sh
 $(glib_builddir)/Makefile: src/glib/configure
 	mkdir -p $(glib_builddir)
 	cd $(glib_builddir) && \
-	  ../../src/glib/configure --prefix=$(abs_build_installdir)
+	  $(CURDIR)/src/glib/configure --prefix=$(abs_build_installdir)
 
 .PHONY: build-install-glib
 
@@ -34,7 +34,7 @@ $(build_installdir)/lib/pkgconfig/*.pc: build-install-glib
 $(gi_builddir)/Makefile: src/gobject-introspection/configure $(build_installdir)/lib/pkgconfig/*.pc
 	mkdir -p $(gi_builddir)
 	cd $(gi_builddir) && \
-	  $(PKG_CONFIG_ENVIRONMENT) ../../src/gobject-introspection/configure \
+	  $(PKG_CONFIG_ENVIRONMENT) $(CURDIR)/src/gobject-introspection/configure \
 	    --prefix=$(abs_build_installdir) \
 	    --with-glib-src=../../src/glib
 
@@ -51,7 +51,7 @@ update-glib-annotations: $(gi_builddir)/Makefile build-install-glib
 	done
 	cd src/gobject-introspection/misc && \
 	  $(PKG_CONFIG_ENVIRONMENT) ./update-glib-annotations.py \
-	    ../../glib ../../../$(gi_builddir)
+	    ../../glib $(abspath $(gi_builddir))
 	for p in $(glib_gir_srcfiles); do \
 	  if cmp -s $$p $$p.save; then \
 	    mv -f $$p.save $$p; \
