@@ -1,3 +1,6 @@
+glib_includedir = build/installed/include/glib-2.0
+gio_unix_includedir = build/installed/include/gio-unix-2.0
+
 all: $(GLIB_GIRFILES)
 
 $(GLIB_GIRFILES): %.gir: build/gobject-introspection/%.gir
@@ -9,24 +12,25 @@ endef
 
 build/gobject-introspection/GLib-2.0.gir: \
     src/gobject-introspection/gir/glib-2.0.c \
-    src/glib/glib/*.h \
-    src/glib/gobject/glib-types.h
+    $(glib_includedir)/glib/*.h \
+    $(glib_includedir)/gobject/glib-types.h
 	$(build_gir)
 
 build/gobject-introspection/GObject-2.0.gir: \
     src/gobject-introspection/gir/gobject-2.0.c \
-    $(filter-out src/glib/gobject/glib-types.h,$(wildcard src/glib/gobject/*.h)) \
+    $(filter-out $(glib_includedir)/gobject/glib-types.h,$(wildcard $(glib_includedir)/gobject/*.h)) \
     build/gobject-introspection/GLib-2.0.gir
 	$(build_gir)
 
 build/gobject-introspection/GModule-2.0.gir: \
     src/gobject-introspection/gir/gmodule-2.0.c \
-    src/glib/gmodule/*.h \
+    $(glib_includedir)/gmodule.h \
     build/gobject-introspection/GLib-2.0.gir
 	$(build_gir)
 
 build/gobject-introspection/Gio-2.0.gir: \
     src/gobject-introspection/gir/gio-2.0.c \
-    src/glib/gio/*.h \
+    $(glib_includedir)/gio/*.h \
+    $(gio_unix_includedir)/gio/*.h \
     build/gobject-introspection/GObject-2.0.gir
 	$(build_gir)
