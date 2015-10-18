@@ -1,5 +1,5 @@
 GLIB_NAMESPACES = GLib-2.0 GObject-2.0 GModule-2.0 Gio-2.0
-GLIB_GIRFILES = $(foreach ns,$(GLIB_NAMESPACES),$(ns).gir)
+GLIB_GIRFILES = $(addsuffix .gir,$(GLIB_NAMESPACES))
 GLIB_PACKAGES := $(shell echo $(GLIB_NAMESPACES) | tr A-Z a-z)
 
 submodules = src/glib src/gobject-introspection
