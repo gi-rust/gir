@@ -6175,7 +6175,8 @@ object.</doc>
                    nullable="1"
                    allow-none="1"
                    closure="1">
-          <doc xml:space="preserve">user data that was specified in g_datalist_id_dup_data()</doc>
+          <doc xml:space="preserve">user data that was specified in
+            g_datalist_id_dup_data()</doc>
           <type name="gpointer" c:type="gpointer"/>
         </parameter>
       </parameters>
@@ -35799,7 +35800,9 @@ could combine with the base character.)</doc>
         </parameter>
       </parameters>
     </function>
-    <function name="datalist_clear" c:identifier="g_datalist_clear">
+    <function name="datalist_clear"
+              c:identifier="g_datalist_clear"
+              introspectable="0">
       <doc xml:space="preserve">Frees all the data elements of the datalist.
 The data elements' destroy functions are called
 if they have been set.</doc>
@@ -35813,9 +35816,7 @@ if they have been set.</doc>
         </parameter>
       </parameters>
     </function>
-    <function name="datalist_foreach"
-              c:identifier="g_datalist_foreach"
-              introspectable="0">
+    <function name="datalist_foreach" c:identifier="g_datalist_foreach">
       <doc xml:space="preserve">Calls the given function for each data element of the datalist. The
 function is called with each data element's #GQuark id and data,
 together with the given @user_data parameter. Note that this
@@ -35830,7 +35831,10 @@ not be called.</doc>
           <doc xml:space="preserve">a datalist.</doc>
           <type name="Data" c:type="GData**"/>
         </parameter>
-        <parameter name="func" transfer-ownership="none" closure="2">
+        <parameter name="func"
+                   transfer-ownership="none"
+                   scope="call"
+                   closure="2">
           <doc xml:space="preserve">the function to call for each data element.</doc>
           <type name="DataForeachFunc" c:type="GDataForeachFunc"/>
         </parameter>
@@ -35847,7 +35851,8 @@ not be called.</doc>
       <doc xml:space="preserve">Gets a data element, using its string identifier. This is slower than
 g_datalist_id_get_data() because it compares strings.</doc>
       <return-value transfer-ownership="none" nullable="1">
-        <doc xml:space="preserve">the data element, or %NULL if it is not found.</doc>
+        <doc xml:space="preserve">the data element, or %NULL if it
+         is not found.</doc>
         <type name="gpointer" c:type="gpointer"/>
       </return-value>
       <parameters>
@@ -35913,6 +35918,7 @@ threads are using the same datalist and the same key.</doc>
                    transfer-ownership="none"
                    nullable="1"
                    allow-none="1"
+                   scope="call"
                    closure="3">
           <doc xml:space="preserve">function to duplicate the old value</doc>
           <type name="DuplicateFunc" c:type="GDuplicateFunc"/>
@@ -35930,7 +35936,8 @@ threads are using the same datalist and the same key.</doc>
               c:identifier="g_datalist_id_get_data">
       <doc xml:space="preserve">Retrieves the data element corresponding to @key_id.</doc>
       <return-value transfer-ownership="none" nullable="1">
-        <doc xml:space="preserve">the data element, or %NULL if it is not found.</doc>
+        <doc xml:space="preserve">the data element, or %NULL if
+         it is not found.</doc>
         <type name="gpointer" c:type="gpointer"/>
       </return-value>
       <parameters>
@@ -35945,11 +35952,13 @@ threads are using the same datalist and the same key.</doc>
       </parameters>
     </function>
     <function name="datalist_id_remove_no_notify"
-              c:identifier="g_datalist_id_remove_no_notify">
+              c:identifier="g_datalist_id_remove_no_notify"
+              introspectable="0">
       <doc xml:space="preserve">Removes an element, without calling its destroy notification
 function.</doc>
       <return-value transfer-ownership="none" nullable="1">
-        <doc xml:space="preserve">the data previously stored at @key_id, or %NULL if none.</doc>
+        <doc xml:space="preserve">the data previously stored at @key_id,
+         or %NULL if none.</doc>
         <type name="gpointer" c:type="gpointer"/>
       </return-value>
       <parameters>
@@ -35965,7 +35974,8 @@ function.</doc>
     </function>
     <function name="datalist_id_replace_data"
               c:identifier="g_datalist_id_replace_data"
-              version="2.34">
+              version="2.34"
+              introspectable="0">
       <doc xml:space="preserve">Compares the member that is associated with @key_id in
 @datalist to @oldval, and if they are the same, replace
 @oldval with @newval.
@@ -36016,8 +36026,10 @@ should not destroy the object in the normal way.</doc>
           <type name="DestroyNotify" c:type="GDestroyNotify"/>
         </parameter>
         <parameter name="old_destroy"
+                   direction="out"
+                   caller-allocates="0"
                    transfer-ownership="none"
-                   nullable="1"
+                   optional="1"
                    allow-none="1"
                    scope="async">
           <doc xml:space="preserve">destroy notify for the existing value</doc>
@@ -36026,7 +36038,8 @@ should not destroy the object in the normal way.</doc>
       </parameters>
     </function>
     <function name="datalist_id_set_data_full"
-              c:identifier="g_datalist_id_set_data_full">
+              c:identifier="g_datalist_id_set_data_full"
+              introspectable="0">
       <doc xml:space="preserve">Sets the data corresponding to the given #GQuark id, and the
 function to be called when the element is removed from the datalist.
 Any previous data with the same key is removed, and its destroy
@@ -36051,7 +36064,11 @@ function is called.</doc>
        corresponding to @key_id.</doc>
           <type name="gpointer" c:type="gpointer"/>
         </parameter>
-        <parameter name="destroy_func" transfer-ownership="none" scope="async">
+        <parameter name="destroy_func"
+                   transfer-ownership="none"
+                   nullable="1"
+                   allow-none="1"
+                   scope="async">
           <doc xml:space="preserve">the function to call when the data element is
                removed. This function will be called with the data
                element and can be used to free any memory allocated
@@ -36061,7 +36078,9 @@ function is called.</doc>
         </parameter>
       </parameters>
     </function>
-    <function name="datalist_init" c:identifier="g_datalist_init">
+    <function name="datalist_init"
+              c:identifier="g_datalist_init"
+              introspectable="0">
       <doc xml:space="preserve">Resets the datalist to %NULL. It does not free any memory or call
 any destroy functions.</doc>
       <return-value transfer-ownership="none">
@@ -36139,9 +36158,7 @@ destroy functions set for data elements.</doc>
         </parameter>
       </parameters>
     </function>
-    <function name="dataset_foreach"
-              c:identifier="g_dataset_foreach"
-              introspectable="0">
+    <function name="dataset_foreach" c:identifier="g_dataset_foreach">
       <doc xml:space="preserve">Calls the given function for each data element which is associated
 with the given location. Note that this function is NOT thread-safe.
 So unless @datalist can be protected from any modifications during
@@ -36157,7 +36174,10 @@ invocation of this function, it should not be called.</doc>
           <doc xml:space="preserve">the location identifying the dataset.</doc>
           <type name="gpointer" c:type="gconstpointer"/>
         </parameter>
-        <parameter name="func" transfer-ownership="none" closure="2">
+        <parameter name="func"
+                   transfer-ownership="none"
+                   scope="call"
+                   closure="2">
           <doc xml:space="preserve">the function to call for each data element.</doc>
           <type name="DataForeachFunc" c:type="GDataForeachFunc"/>
         </parameter>
@@ -36173,8 +36193,8 @@ invocation of this function, it should not be called.</doc>
     <function name="dataset_id_get_data" c:identifier="g_dataset_id_get_data">
       <doc xml:space="preserve">Gets the data element corresponding to a #GQuark.</doc>
       <return-value transfer-ownership="none" nullable="1">
-        <doc xml:space="preserve">the data element corresponding to the #GQuark, or %NULL if
-         it is not found.</doc>
+        <doc xml:space="preserve">the data element corresponding to
+         the #GQuark, or %NULL if it is not found.</doc>
         <type name="gpointer" c:type="gpointer"/>
       </return-value>
       <parameters>
@@ -36192,11 +36212,13 @@ invocation of this function, it should not be called.</doc>
       </parameters>
     </function>
     <function name="dataset_id_remove_no_notify"
-              c:identifier="g_dataset_id_remove_no_notify">
+              c:identifier="g_dataset_id_remove_no_notify"
+              introspectable="0">
       <doc xml:space="preserve">Removes an element, without calling its destroy notification
 function.</doc>
       <return-value transfer-ownership="none" nullable="1">
-        <doc xml:space="preserve">the data previously stored at @key_id, or %NULL if none.</doc>
+        <doc xml:space="preserve">the data previously stored at @key_id,
+         or %NULL if none.</doc>
         <type name="gpointer" c:type="gpointer"/>
       </return-value>
       <parameters>
@@ -36214,7 +36236,8 @@ function.</doc>
       </parameters>
     </function>
     <function name="dataset_id_set_data_full"
-              c:identifier="g_dataset_id_set_data_full">
+              c:identifier="g_dataset_id_set_data_full"
+              introspectable="0">
       <doc xml:space="preserve">Sets the data element associated with the given #GQuark id, and also
 the function to call when the data element is destroyed. Any
 previous data with the same key is removed, and its destroy function
