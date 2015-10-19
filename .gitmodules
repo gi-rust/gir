@@ -1,6 +1,7 @@
 [submodule "src/glib"]
 	path = src/glib
-	url = git://git.gnome.org/glib
+	url = ssh://git@github.com/gi-rust/glib.git
+	branch = rust-fixes/master
 [submodule "src/gobject-introspection"]
 	path = src/gobject-introspection
 	url = git://git.gnome.org/gobject-introspection

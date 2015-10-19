@@ -34599,7 +34599,8 @@ by overwriting the input data.</doc>
     </function>
     <function name="base64_decode_step"
               c:identifier="g_base64_decode_step"
-              version="2.12">
+              version="2.12"
+              introspectable="0">
       <doc xml:space="preserve">Incrementally decode a sequence of binary data from its Base-64 stringified
 representation. By calling this function multiple times you can convert
 data in chunks to avoid having to have the full encoded data in memory.
@@ -34625,8 +34626,8 @@ state).</doc>
         </parameter>
         <parameter name="out"
                    direction="out"
-                   caller-allocates="0"
-                   transfer-ownership="full">
+                   caller-allocates="1"
+                   transfer-ownership="none">
           <doc xml:space="preserve">output buffer</doc>
           <array zero-terminated="0" c:type="guchar*">
             <type name="guint8"/>
