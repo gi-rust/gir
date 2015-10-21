@@ -8,26 +8,35 @@ all: $(GLIB_GIRFILES)
 $(GLIB_GIRFILES): %.gir: $(gi_builddir)/%.gir
 	install -m644 $< $@
 
-$(gi_builddir)/*.gir: $(gi_builddir)/Makefile
+define build_gir
 	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C $(gi_builddir) $(notdir $@)
+endef
 
 $(gi_builddir)/GLib-2.0.gir: \
+	$(gi_builddir)/Makefile \
     src/gobject-introspection/gir/glib-2.0.c \
     $(glib_includedir)/glib/*.h \
     $(glib_includedir)/gobject/glib-types.h
+	$(build_gir)
 
 $(gi_builddir)/GObject-2.0.gir: \
+	$(gi_builddir)/Makefile \
     src/gobject-introspection/gir/gobject-2.0.c \
     $(filter-out $(glib_includedir)/gobject/glib-types.h,$(wildcard $(glib_includedir)/gobject/*.h)) \
     $(gi_builddir)/GLib-2.0.gir
+	$(build_gir)
 
 $(gi_builddir)/GModule-2.0.gir: \
+	$(gi_builddir)/Makefile \
     src/gobject-introspection/gir/gmodule-2.0.c \
     $(glib_includedir)/gmodule.h \
     $(gi_builddir)/GLib-2.0.gir
+	$(build_gir)
 
 $(gi_builddir)/Gio-2.0.gir: \
+	$(gi_builddir)/Makefile \
     src/gobject-introspection/gir/gio-2.0.c \
     $(glib_includedir)/gio/*.h \
     $(gio_unix_includedir)/gio/*.h \
     $(gi_builddir)/GObject-2.0.gir
+	$(build_gir)
