@@ -10282,10 +10282,10 @@ as rcfile value or object property serialization).</doc>
         </parameters>
       </method>
       <method name="unset" c:identifier="g_value_unset">
-        <doc xml:space="preserve">Clears the current value in @value (if any) and "unsets" the type,
-this releases all resources associated with this GValue. An unset
-value is the same as an uninitialized (zero-filled) #GValue
-structure.</doc>
+        <doc xml:space="preserve">Clears the current value in @value and "unsets" the type,
+this releases all resources associated with this GValue.
+An unset value is the same as an uninitialized (zero-filled)
+#GValue structure.</doc>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -12891,10 +12891,7 @@ See g_param_spec_internal() for details on property names.</doc>
           <doc xml:space="preserve">description of the property specified</doc>
           <type name="utf8" c:type="const gchar*"/>
         </parameter>
-        <parameter name="default_value"
-                   transfer-ownership="none"
-                   nullable="1"
-                   allow-none="1">
+        <parameter name="default_value" transfer-ownership="none">
           <doc xml:space="preserve">default value for the property specified</doc>
           <type name="utf8" c:type="const gchar*"/>
         </parameter>

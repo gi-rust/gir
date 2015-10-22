@@ -2906,8 +2906,7 @@ g_bytes_new_with_free_func().
       </constructor>
       <constructor name="new_with_free_func"
                    c:identifier="g_bytes_new_with_free_func"
-                   version="2.32"
-                   introspectable="0">
+                   version="2.32">
         <doc xml:space="preserve">Creates a #GBytes from @data.
 
 When the last reference is dropped, @free_func will be called with the
@@ -12817,7 +12816,7 @@ linked against at application run time.</doc>
       <doc xml:space="preserve">The maximum value which can be held in a #guint8.</doc>
       <type name="guint8" c:type="guint8"/>
     </constant>
-    <constant name="MICRO_VERSION" value="0" c:type="GLIB_MICRO_VERSION">
+    <constant name="MICRO_VERSION" value="1" c:type="GLIB_MICRO_VERSION">
       <doc xml:space="preserve">The micro version number of the GLib library.
 
 Like #gtk_micro_version, but from the headers used at
@@ -12844,7 +12843,7 @@ linked against at application run time.</doc>
       <doc xml:space="preserve">The minimum value which can be held in a #gint8.</doc>
       <type name="gint8" c:type="gint8"/>
     </constant>
-    <constant name="MINOR_VERSION" value="47" c:type="GLIB_MINOR_VERSION">
+    <constant name="MINOR_VERSION" value="46" c:type="GLIB_MINOR_VERSION">
       <doc xml:space="preserve">The minor version number of the GLib library.
 
 Like #gtk_minor_version, but from the headers used at
@@ -22577,25 +22576,6 @@ if the second iterator comes before the first.</doc>
           </parameter>
         </parameters>
       </method>
-      <method name="is_empty"
-              c:identifier="g_sequence_is_empty"
-              version="2.48">
-        <doc xml:space="preserve">Returns %TRUE if the sequence contains zero items.
-
-This function is functionally identical to checking the result of
-g_sequence_get_length() being equal to zero. However this function is
-implemented in O(1) running time.</doc>
-        <return-value transfer-ownership="none">
-          <doc xml:space="preserve">%TRUE if the sequence is empty, otherwise %FALSE.</doc>
-          <type name="gboolean" c:type="gboolean"/>
-        </return-value>
-        <parameters>
-          <instance-parameter name="seq" transfer-ownership="none">
-            <doc xml:space="preserve">a #GSequence</doc>
-            <type name="Sequence" c:type="GSequence*"/>
-          </instance-parameter>
-        </parameters>
-      </method>
       <method name="lookup"
               c:identifier="g_sequence_lookup"
               version="2.28"
@@ -28538,32 +28518,6 @@ url="http://www.unicode.org/reports/tr24/"&gt;Unicode Standard Annex
               value="125"
               c:identifier="G_UNICODE_SCRIPT_WARANG_CITI">
         <doc xml:space="preserve">Warang Citi. Since: 2.42</doc>
-      </member>
-      <member name="ahom" value="126" c:identifier="G_UNICODE_SCRIPT_AHOM">
-        <doc xml:space="preserve">Ahom. Since 2.48</doc>
-      </member>
-      <member name="anatolian_hieroglyphs"
-              value="127"
-              c:identifier="G_UNICODE_SCRIPT_ANATOLIAN_HIEROGLYPHS">
-        <doc xml:space="preserve">Anatolian Hieroglyphs. Since 2.48</doc>
-      </member>
-      <member name="hatran" value="128" c:identifier="G_UNICODE_SCRIPT_HATRAN">
-        <doc xml:space="preserve">Hatran. Since 2.48</doc>
-      </member>
-      <member name="multani"
-              value="129"
-              c:identifier="G_UNICODE_SCRIPT_MULTANI">
-        <doc xml:space="preserve">Multani. Since 2.48</doc>
-      </member>
-      <member name="old_hungarian"
-              value="130"
-              c:identifier="G_UNICODE_SCRIPT_OLD_HUNGARIAN">
-        <doc xml:space="preserve">Old Hungarian. Since 2.48</doc>
-      </member>
-      <member name="signwriting"
-              value="131"
-              c:identifier="G_UNICODE_SCRIPT_SIGNWRITING">
-        <doc xml:space="preserve">Signwriting. Since 2.48</doc>
       </member>
     </enumeration>
     <enumeration name="UnicodeType" c:type="GUnicodeType">
