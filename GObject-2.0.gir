@@ -4847,7 +4847,8 @@ premature notification while the object is still being modified.</doc>
       <method name="get_data" c:identifier="g_object_get_data">
         <doc xml:space="preserve">Gets a named field from the objects table of associations (see g_object_set_data()).</doc>
         <return-value transfer-ownership="none" nullable="1">
-          <doc xml:space="preserve">the data if found, or %NULL if no such data exists.</doc>
+          <doc xml:space="preserve">the data if found,
+         or %NULL if no such data exists.</doc>
           <type name="gpointer" c:type="gpointer"/>
         </return-value>
         <parameters>
@@ -5120,7 +5121,8 @@ to match the one used with g_object_add_weak_pointer().</doc>
       </method>
       <method name="replace_data"
               c:identifier="g_object_replace_data"
-              version="2.34">
+              version="2.34"
+              introspectable="0">
         <doc xml:space="preserve">Compares the user data for the key @key on @object with
 @oldval, and if they are the same, replaces @oldval with
 @newval.
@@ -5171,8 +5173,10 @@ should not destroy the object in the normal way.</doc>
             <type name="GLib.DestroyNotify" c:type="GDestroyNotify"/>
           </parameter>
           <parameter name="old_destroy"
+                     direction="out"
+                     caller-allocates="0"
                      transfer-ownership="none"
-                     nullable="1"
+                     optional="1"
                      allow-none="1"
                      scope="async">
             <doc xml:space="preserve">destroy notify for the existing value</doc>
@@ -5182,7 +5186,8 @@ should not destroy the object in the normal way.</doc>
       </method>
       <method name="replace_qdata"
               c:identifier="g_object_replace_qdata"
-              version="2.34">
+              version="2.34"
+              introspectable="0">
         <doc xml:space="preserve">Compares the user data for the key @quark on @object with
 @oldval, and if they are the same, replaces @oldval with
 @newval.
@@ -5233,8 +5238,10 @@ should not destroy the object in the normal way.</doc>
             <type name="GLib.DestroyNotify" c:type="GDestroyNotify"/>
           </parameter>
           <parameter name="old_destroy"
+                     direction="out"
+                     caller-allocates="0"
                      transfer-ownership="none"
-                     nullable="1"
+                     optional="1"
                      allow-none="1"
                      scope="async">
             <doc xml:space="preserve">destroy notify for the existing value</doc>
@@ -5311,7 +5318,11 @@ Note that the @destroy callback is not called if @data is %NULL.</doc>
             <doc xml:space="preserve">data to associate with that key</doc>
             <type name="gpointer" c:type="gpointer"/>
           </parameter>
-          <parameter name="destroy" transfer-ownership="none" scope="async">
+          <parameter name="destroy"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1"
+                     scope="async">
             <doc xml:space="preserve">function to call when the association is destroyed</doc>
             <type name="GLib.DestroyNotify" c:type="GDestroyNotify"/>
           </parameter>
@@ -5396,7 +5407,11 @@ with the same @quark.</doc>
             <doc xml:space="preserve">An opaque user data pointer</doc>
             <type name="gpointer" c:type="gpointer"/>
           </parameter>
-          <parameter name="destroy" transfer-ownership="none" scope="async">
+          <parameter name="destroy"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1"
+                     scope="async">
             <doc xml:space="preserve">Function to invoke with @data as argument, when @data
           needs to be freed</doc>
             <type name="GLib.DestroyNotify" c:type="GDestroyNotify"/>
@@ -5430,7 +5445,8 @@ with the same @quark.</doc>
         <doc xml:space="preserve">Remove a specified datum from the object's data associations,
 without invoking the association's destroy handler.</doc>
         <return-value transfer-ownership="full" nullable="1">
-          <doc xml:space="preserve">the data if found, or %NULL if no such data exists.</doc>
+          <doc xml:space="preserve">the data if found, or %NULL
+         if no such data exists.</doc>
           <type name="gpointer" c:type="gpointer"/>
         </return-value>
         <parameters>
