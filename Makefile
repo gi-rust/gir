@@ -7,7 +7,7 @@ CFLAGS = -O1
 export CFLAGS
 
 all: update-glib-annotations
-	$(MAKE) -f Makefile.gir
+	$(MAKE) -f Makefile-gir
 
 clean:
 	-rm -r $(builddir)
