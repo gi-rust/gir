@@ -70838,7 +70838,7 @@ calling g_socket_connectable_enumerate().</doc>
           </instance-parameter>
         </parameters>
       </virtual-method>
-      <virtual-method name="to_string" invoker="to_string" version="2.48.0">
+      <virtual-method name="to_string" invoker="to_string" version="2.48">
         <doc xml:space="preserve">Format a #GSocketConnectable as a string. This is a human-readable format for
 use in debugging output, and is not a stable serialization format. It is not
 suitable for use in user interfaces as it exposes too much information for a
@@ -70897,7 +70897,7 @@ calling g_socket_connectable_enumerate().</doc>
       </method>
       <method name="to_string"
               c:identifier="g_socket_connectable_to_string"
-              version="2.48.0">
+              version="2.48">
         <doc xml:space="preserve">Format a #GSocketConnectable as a string. This is a human-readable format for
 use in debugging output, and is not a stable serialization format. It is not
 suitable for use in user interfaces as it exposes too much information for a
