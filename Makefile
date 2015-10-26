@@ -9,7 +9,7 @@ CONFIGURE_VARS = \
 export CFLAGS CPPFLAGS LDFLAGS
 
 all: update-glib-annotations
-	$(MAKE) -f Makefile-gir
+	$(MAKE) -f Makefile-gir PKG_CONFIG_PATH='$(build_PKG_CONFIG_PATH)'
 
 clean:
 	-rm -r $(builddir)
