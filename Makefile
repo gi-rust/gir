@@ -1,6 +1,12 @@
 include vars.mk
 
-export CFLAGS LDFLAGS PKG_CONFIG_PATH
+CONFIGURE_VARS = \
+  CFLAGS='$(CFLAGS)' \
+  CPPFLAGS='$(CPPFLAGS)' \
+  LDFLAGS='$(LDFLAGS)' \
+  PKG_CONFIG_PATH='$(build_PKG_CONFIG_PATH)'
+
+export CFLAGS CPPFLAGS LDFLAGS
 
 all: update-glib-annotations
 	$(MAKE) -f Makefile-gir
@@ -25,9 +31,7 @@ $(glib_builddir)/Makefile: src/glib/configure
 	cd $(glib_builddir) && \
 	  $(CURDIR)/src/glib/configure \
 	    --prefix=$(abs_build_installdir) \
-	    CFLAGS='$(CFLAGS)' \
-	    LDFLAGS='$(LDFLAGS)' \
-	    PKG_CONFIG_PATH='$(PKG_CONFIG_PATH)'
+	    $(CONFIGURE_VARS)
 
 .PHONY: build-install-glib
 
@@ -43,9 +47,7 @@ $(gi_builddir)/Makefile: src/gobject-introspection/configure $(build_installdir)
 	  $(CURDIR)/src/gobject-introspection/configure \
 	    --prefix=$(abs_build_installdir) \
 	    --with-glib-src=../../src/glib \
-	    CFLAGS='$(CFLAGS)' \
-	    LDFLAGS='$(LDFLAGS)' \
-	    PKG_CONFIG_PATH='$(PKG_CONFIG_PATH)'
+	    $(CONFIGURE_VARS)
 
 glib_gir_srcfiles = $(foreach lib,$(GLIB_PACKAGES),src/gobject-introspection/gir/$(lib).c)
 
@@ -53,8 +55,8 @@ glib_gir_srcfiles = $(foreach lib,$(GLIB_PACKAGES),src/gobject-introspection/gir
 
 update-glib-annotations: $(gi_builddir)/Makefile build-install-glib
 # Work around an issue with parallel builds
-	$(MAKE) -C $(gi_builddir) scannerparser.h
-	$(MAKE) -C $(gi_builddir) g-ir-annotation-tool
+	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C $(gi_builddir) scannerparser.h
+	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C $(gi_builddir) g-ir-annotation-tool
 	for p in $(glib_gir_srcfiles); do \
 	  cp -p $$p $$p.save; \
 	done

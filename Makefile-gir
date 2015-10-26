@@ -9,7 +9,7 @@ $(GLIB_GIRFILES): %.gir: $(gi_builddir)/%.gir
 	install -m644 $< $@
 
 define build_gir
-	$(MAKE) -C $(gi_builddir) $(notdir $@)
+	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C $(gi_builddir) $(notdir $@)
 endef
 
 $(gi_builddir)/GLib-2.0.gir: \
