@@ -8,4 +8,10 @@ gi_builddir = $(builddir)/gobject-introspection
 build_installdir = $(builddir)/installed
 abs_build_installdir = $(abspath $(build_installdir))
 
-PKG_CONFIG_ENVIRONMENT = PKG_CONFIG_PATH=$(abs_build_installdir)/lib/pkgconfig
+# Would have been -O0, but g-ir-scanner emits cpp warnings
+# about _FORTIFY_SOURCE
+CFLAGS = -O1
+LDFLAGS =
+PKG_CONFIG_PATH = $(abs_build_installdir)/lib/pkgconfig
+
+PKG_CONFIG_ENVIRONMENT = PKG_CONFIG_PATH=$(PKG_CONFIG_PATH)

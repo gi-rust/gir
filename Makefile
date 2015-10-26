@@ -1,11 +1,6 @@
 include vars.mk
 
-# Would have been -O0, but g-ir-scanner emits cpp warnings
-# about _FORTIFY_SOURCE
-CFLAGS = -O1
-LDFLAGS =
-
-export CFLAGS LDFLAGS
+export CFLAGS LDFLAGS PKG_CONFIG_PATH
 
 all: update-glib-annotations
 	$(MAKE) -f Makefile-gir
@@ -31,7 +26,8 @@ $(glib_builddir)/Makefile: src/glib/configure
 	  $(CURDIR)/src/glib/configure \
 	    --prefix=$(abs_build_installdir) \
 	    CFLAGS='$(CFLAGS)' \
-	    LDFLAGS='$(LDFLAGS)'
+	    LDFLAGS='$(LDFLAGS)' \
+	    PKG_CONFIG_PATH='$(PKG_CONFIG_PATH)'
 
 .PHONY: build-install-glib
 
@@ -44,11 +40,12 @@ $(build_installdir)/lib/pkgconfig/*.pc: build-install-glib
 $(gi_builddir)/Makefile: src/gobject-introspection/configure $(build_installdir)/lib/pkgconfig/*.pc
 	mkdir -p $(gi_builddir)
 	cd $(gi_builddir) && \
-	  $(PKG_CONFIG_ENVIRONMENT) $(CURDIR)/src/gobject-introspection/configure \
+	  $(CURDIR)/src/gobject-introspection/configure \
 	    --prefix=$(abs_build_installdir) \
 	    --with-glib-src=../../src/glib \
 	    CFLAGS='$(CFLAGS)' \
-	    LDFLAGS='$(LDFLAGS)'
+	    LDFLAGS='$(LDFLAGS)' \
+	    PKG_CONFIG_PATH='$(PKG_CONFIG_PATH)'
 
 glib_gir_srcfiles = $(foreach lib,$(GLIB_PACKAGES),src/gobject-introspection/gir/$(lib).c)
 
@@ -56,8 +53,8 @@ glib_gir_srcfiles = $(foreach lib,$(GLIB_PACKAGES),src/gobject-introspection/gir
 
 update-glib-annotations: $(gi_builddir)/Makefile build-install-glib
 # Work around an issue with parallel builds
-	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C $(gi_builddir) scannerparser.h
-	$(PKG_CONFIG_ENVIRONMENT) $(MAKE) -C $(gi_builddir) g-ir-annotation-tool
+	$(MAKE) -C $(gi_builddir) scannerparser.h
+	$(MAKE) -C $(gi_builddir) g-ir-annotation-tool
 	for p in $(glib_gir_srcfiles); do \
 	  cp -p $$p $$p.save; \
 	done
