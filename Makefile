@@ -3,8 +3,9 @@ include vars.mk
 # Would have been -O0, but g-ir-scanner emits cpp warnings
 # about _FORTIFY_SOURCE
 CFLAGS = -O1
+LDFLAGS =
 
-export CFLAGS
+export CFLAGS LDFLAGS
 
 all: update-glib-annotations
 	$(MAKE) -f Makefile-gir
@@ -29,7 +30,8 @@ $(glib_builddir)/Makefile: src/glib/configure
 	cd $(glib_builddir) && \
 	  $(CURDIR)/src/glib/configure \
 	    --prefix=$(abs_build_installdir) \
-	    CFLAGS='$(CFLAGS)'
+	    CFLAGS='$(CFLAGS)' \
+	    LDFLAGS='$(LDFLAGS)'
 
 .PHONY: build-install-glib
 
@@ -45,7 +47,8 @@ $(gi_builddir)/Makefile: src/gobject-introspection/configure $(build_installdir)
 	  $(PKG_CONFIG_ENVIRONMENT) $(CURDIR)/src/gobject-introspection/configure \
 	    --prefix=$(abs_build_installdir) \
 	    --with-glib-src=../../src/glib \
-	    CFLAGS='$(CFLAGS)'
+	    CFLAGS='$(CFLAGS)' \
+	    LDFLAGS='$(LDFLAGS)'
 
 glib_gir_srcfiles = $(foreach lib,$(GLIB_PACKAGES),src/gobject-introspection/gir/$(lib).c)
 
