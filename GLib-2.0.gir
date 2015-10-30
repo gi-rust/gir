@@ -17004,7 +17004,7 @@ and all memory allocated by the @group is released.</doc>
       <doc xml:space="preserve">Pi divided by 4.</doc>
       <type name="gdouble" c:type="gdouble"/>
     </constant>
-    <constant name="POLLFD_FORMAT" value="%#I64x" c:type="G_POLLFD_FORMAT">
+    <constant name="POLLFD_FORMAT" value="%d" c:type="G_POLLFD_FORMAT">
       <doc xml:space="preserve">A format specifier that can be used in printf()-style format strings
 when printing the @fd member of a #GPollFD.</doc>
       <type name="utf8" c:type="gchar*"/>
