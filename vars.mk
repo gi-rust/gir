@@ -15,6 +15,7 @@ CFLAGS = -O1
 CPPFLAGS =
 LDFLAGS =
 PKG_CONFIG_PATH =
+PYTHON = python3
 
 build_PKG_CONFIG_PATH = $(build_install_pkg_config_dir):$(PKG_CONFIG_PATH)
 
