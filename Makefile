@@ -1,15 +1,16 @@
 include vars.mk
 
 CONFIGURE_VARS = \
-  CFLAGS='$(CFLAGS)' \
-  CPPFLAGS='$(CPPFLAGS)' \
-  LDFLAGS='$(LDFLAGS)' \
-  PKG_CONFIG_PATH='$(build_PKG_CONFIG_PATH)'
+  CFLAGS="$(CFLAGS)" \
+  CPPFLAGS="$(CPPFLAGS)" \
+  LDFLAGS="$(LDFLAGS)" \
+  PKG_CONFIG_PATH="$(build_PKG_CONFIG_PATH)" \
+  PYTHON="$(PYTHON)"
 
 export CFLAGS CPPFLAGS LDFLAGS
 
 all: update-glib-annotations
-	$(MAKE) -f Makefile-gir PKG_CONFIG_PATH='$(build_PKG_CONFIG_PATH)'
+	$(MAKE) -f Makefile-gir PKG_CONFIG_PATH="$(build_PKG_CONFIG_PATH)"
 
 clean:
 	-rm -r $(builddir)

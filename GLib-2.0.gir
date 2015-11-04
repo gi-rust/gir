@@ -3786,12 +3786,12 @@ flags &amp; ~G_DATALIST_FLAGS_MASK != 0 is an error.</doc>
       <doc xml:space="preserve">Represents an invalid year.</doc>
       <type name="gint" c:type="gint"/>
     </constant>
-    <constant name="DIR_SEPARATOR" value="92" c:type="G_DIR_SEPARATOR">
+    <constant name="DIR_SEPARATOR" value="47" c:type="G_DIR_SEPARATOR">
       <doc xml:space="preserve">The directory separator character.
 This is '/' on UNIX machines and '\' under Windows.</doc>
       <type name="gint" c:type="gint"/>
     </constant>
-    <constant name="DIR_SEPARATOR_S" value="\" c:type="G_DIR_SEPARATOR_S">
+    <constant name="DIR_SEPARATOR_S" value="/" c:type="G_DIR_SEPARATOR_S">
       <doc xml:space="preserve">The directory separator as a string.
 This is "/" on UNIX machines and "\" under Windows.</doc>
       <type name="utf8" c:type="gchar*"/>
@@ -17003,7 +17003,7 @@ and all memory allocated by the @group is released.</doc>
       <doc xml:space="preserve">Pi divided by 4.</doc>
       <type name="gdouble" c:type="gdouble"/>
     </constant>
-    <constant name="POLLFD_FORMAT" value="%#I64x" c:type="G_POLLFD_FORMAT">
+    <constant name="POLLFD_FORMAT" value="%d" c:type="G_POLLFD_FORMAT">
       <doc xml:space="preserve">A format specifier that can be used in printf()-style format strings
 when printing the @fd member of a #GPollFD.</doc>
       <type name="utf8" c:type="gchar*"/>
@@ -20767,14 +20767,14 @@ to g_regex_replace_eval(), and it should append the replacement to
       </member>
     </bitfield>
     <constant name="SEARCHPATH_SEPARATOR"
-              value="59"
+              value="58"
               c:type="G_SEARCHPATH_SEPARATOR">
       <doc xml:space="preserve">The search path separator character.
 This is ':' on UNIX machines and ';' under Windows.</doc>
       <type name="gint" c:type="gint"/>
     </constant>
     <constant name="SEARCHPATH_SEPARATOR_S"
-              value=";"
+              value=":"
               c:type="G_SEARCHPATH_SEPARATOR_S">
       <doc xml:space="preserve">The search path separator as a string.
 This is ":" on UNIX machines and ";" under Windows.</doc>

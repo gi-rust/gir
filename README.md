@@ -5,16 +5,33 @@ references to the source projects used to generate the GIR files.
 # Building
 
 To rebuild the GIR files, change into the working directory of the cloned
-repository and run `make`. GNU make is required.
+repository and run `make`. GNU make is required. **Caveat:** The initial
+build will clone the submodules, some of which have history stretching back
+to 1998; read below on ways to limit the amount of fetching.
 
-Bootstrapping of the build involves cloning the submodules from their GNOME
-git repositories. If you have the GNOME repositories already cloned locally,
-you can avoid excessive transfers by initializing the submodules with those
-local clones as reference repositories:
+## Optimizing the initial fetch
+
+Bootstrapping of the build involves cloning the submodules originating in
+GNOME git repositories. If you have the GNOME repositories already cloned
+locally, you can avoid excessive transfers by initializing the submodules
+with those local clones as reference repositories:
 
 ```sh
 git submodule update --init --reference ~/my-repos/glib src/glib
 git submodule update --init --reference ~/my-repos/gobject-introspection src/gobject-introspection
+```
+
+In non-development setups such as continuous integration builds,
+shallow clones can be useful:
+
+```sh
+git submodule update --init --depth 40
+# git complains about an unreachable reference
+# in origin/rust-fixes/*; fix below
+cd src/glib
+git remote set-branches --add origin rust-fixes/master rust-fixes/glib-2-46
+cd ../..
+git submodule update --remote --depth 40 src/glib
 ```
 
 ## Dependencies
@@ -24,8 +41,7 @@ The tools and libraries required for building include:
 * GNU make
 * GNU autotools (autoconf, automake, libtool)
 * pkg-config
-* Python 2.x and 3.x in a side-by-side installation; the Python 3
-  executable should be found in `PATH` as `python3`.
+* Python 3.x; the Python executable should be found in `PATH` as `python3`.
 * External build dependencies of glib and gobject-introspection.
 
 Make variables `CPPFLAGS`, `LDFLAGS`, `PKG_CONFIG_PATH` are

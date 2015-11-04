@@ -1,6 +1,6 @@
 [submodule "src/glib"]
 	path = src/glib
-	url = ssh://git@github.com/gi-rust/glib.git
+	url = https://github.com/gi-rust/glib.git
 	branch = rust-fixes/glib-2-46
 [submodule "src/gobject-introspection"]
 	path = src/gobject-introspection
