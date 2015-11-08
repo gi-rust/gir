@@ -9526,8 +9526,11 @@ to produce as much output as possible and then return an error
                      transfer-ownership="none"
                      nullable="1"
                      allow-none="1">
-            <doc xml:space="preserve">a buffer to write converted data in.</doc>
-            <type name="gpointer" c:type="void*"/>
+            <doc xml:space="preserve">a buffer to write
+   converted data in.</doc>
+            <array length="3" zero-terminated="0" c:type="void*">
+              <type name="guint8"/>
+            </array>
           </parameter>
           <parameter name="outbuf_size" transfer-ownership="none">
             <doc xml:space="preserve">the number of bytes in @outbuf, must be at least one</doc>
@@ -9673,12 +9676,12 @@ to produce as much output as possible and then return an error
             <doc xml:space="preserve">the number of bytes in @inbuf</doc>
             <type name="gsize" c:type="gsize"/>
           </parameter>
-          <parameter name="outbuf"
-                     transfer-ownership="none"
-                     nullable="1"
-                     allow-none="1">
-            <doc xml:space="preserve">a buffer to write converted data in.</doc>
-            <type name="gpointer" c:type="void*"/>
+          <parameter name="outbuf" transfer-ownership="none">
+            <doc xml:space="preserve">a buffer to write
+   converted data in.</doc>
+            <array length="3" zero-terminated="0" c:type="void*">
+              <type name="guint8"/>
+            </array>
           </parameter>
           <parameter name="outbuf_size" transfer-ownership="none">
             <doc xml:space="preserve">the number of bytes in @outbuf, must be at least one</doc>
@@ -9784,8 +9787,11 @@ and may fail at any place.</doc>
                        transfer-ownership="none"
                        nullable="1"
                        allow-none="1">
-              <doc xml:space="preserve">a buffer to write converted data in.</doc>
-              <type name="gpointer" c:type="void*"/>
+              <doc xml:space="preserve">a buffer to write
+   converted data in.</doc>
+              <array length="4" zero-terminated="0" c:type="void*">
+                <type name="guint8"/>
+              </array>
             </parameter>
             <parameter name="outbuf_size" transfer-ownership="none">
               <doc xml:space="preserve">the number of bytes in @outbuf, must be at least one</doc>
@@ -10232,10 +10238,7 @@ the OS or if @native_type isn't supported by the OS.</doc>
             <doc xml:space="preserve">The type of native credentials to set.</doc>
             <type name="CredentialsType" c:type="GCredentialsType"/>
           </parameter>
-          <parameter name="native"
-                     transfer-ownership="none"
-                     nullable="1"
-                     allow-none="1">
+          <parameter name="native" transfer-ownership="none">
             <doc xml:space="preserve">A pointer to native credentials.</doc>
             <type name="gpointer" c:type="gpointer"/>
           </parameter>
@@ -20492,10 +20495,7 @@ segment of the object path (ie: it never contains a slash).</doc>
           <doc xml:space="preserve">A node that is a child of @object_path (relative to @object_path) or %NULL for the root of the subtree.</doc>
           <type name="utf8" c:type="const gchar*"/>
         </parameter>
-        <parameter name="out_user_data"
-                   transfer-ownership="none"
-                   nullable="1"
-                   allow-none="1">
+        <parameter name="out_user_data" transfer-ownership="none">
           <doc xml:space="preserve">Return location for user data to pass to functions in the returned #GDBusInterfaceVTable (never %NULL).</doc>
           <type name="gpointer" c:type="gpointer*"/>
         </parameter>
@@ -39268,10 +39268,10 @@ not contain a byte string, %NULL will be returned.</doc>
                      direction="out"
                      caller-allocates="0"
                      transfer-ownership="full"
-                     nullable="1"
                      optional="1"
                      allow-none="1">
-            <doc xml:space="preserve">return location for the attribute value, or %NULL</doc>
+            <doc xml:space="preserve">return location for the
+   attribute value, or %NULL; the attribute value will not be %NULL</doc>
             <type name="gpointer" c:type="gpointer*"/>
           </parameter>
           <parameter name="status"
@@ -39791,10 +39791,7 @@ attribute, use %G_ATTRIBUTE_TYPE_INVALID for @type.</doc>
             <doc xml:space="preserve">a #GFileAttributeType</doc>
             <type name="FileAttributeType" c:type="GFileAttributeType"/>
           </parameter>
-          <parameter name="value_p"
-                     transfer-ownership="none"
-                     nullable="1"
-                     allow-none="1">
+          <parameter name="value_p" transfer-ownership="none">
             <doc xml:space="preserve">pointer to the value</doc>
             <type name="gpointer" c:type="gpointer"/>
           </parameter>
@@ -43850,10 +43847,7 @@ use in a #GHashTable or similar data structure.</doc>
           <type name="guint" c:type="guint"/>
         </return-value>
         <parameters>
-          <parameter name="icon"
-                     transfer-ownership="none"
-                     nullable="1"
-                     allow-none="1">
+          <parameter name="icon" transfer-ownership="none">
             <doc xml:space="preserve">#gconstpointer to an icon object.</doc>
             <type name="gpointer" c:type="gconstpointer"/>
           </parameter>
@@ -47851,7 +47845,8 @@ for memory allocation.</doc>
 Note that the returned pointer may become invalid on the next
 write or truncate operation on the stream.</doc>
         <return-value transfer-ownership="none" nullable="1">
-          <doc xml:space="preserve">pointer to the stream's data</doc>
+          <doc xml:space="preserve">pointer to the stream's data, or %NULL if the data
+   has been stolen</doc>
           <type name="gpointer" c:type="gpointer"/>
         </return-value>
         <parameters>
@@ -47930,7 +47925,8 @@ freed using the free function set in @ostream's
 
 @ostream must be closed before calling this function.</doc>
         <return-value transfer-ownership="full" nullable="1">
-          <doc xml:space="preserve">the stream's data</doc>
+          <doc xml:space="preserve">the stream's data, or %NULL if it has previously
+   been stolen</doc>
           <type name="gpointer" c:type="gpointer"/>
         </return-value>
         <parameters>
@@ -67908,10 +67904,7 @@ struct sockaddr @native.</doc>
           <type name="SocketAddress" c:type="GSocketAddress*"/>
         </return-value>
         <parameters>
-          <parameter name="native"
-                     transfer-ownership="none"
-                     nullable="1"
-                     allow-none="1">
+          <parameter name="native" transfer-ownership="none">
             <doc xml:space="preserve">a pointer to a struct sockaddr</doc>
             <type name="gpointer" c:type="gpointer"/>
           </parameter>
@@ -70305,10 +70298,7 @@ object.</doc>
             <doc xml:space="preserve">a #GSocketControlMessage</doc>
             <type name="SocketControlMessage" c:type="GSocketControlMessage*"/>
           </instance-parameter>
-          <parameter name="data"
-                     transfer-ownership="none"
-                     nullable="1"
-                     allow-none="1">
+          <parameter name="data" transfer-ownership="none">
             <doc xml:space="preserve">A buffer to write data to</doc>
             <type name="gpointer" c:type="gpointer"/>
           </parameter>
@@ -70379,10 +70369,7 @@ object.</doc>
             <doc xml:space="preserve">a #GSocketControlMessage</doc>
             <type name="SocketControlMessage" c:type="GSocketControlMessage*"/>
           </instance-parameter>
-          <parameter name="data"
-                     transfer-ownership="none"
-                     nullable="1"
-                     allow-none="1">
+          <parameter name="data" transfer-ownership="none">
             <doc xml:space="preserve">A buffer to write data to</doc>
             <type name="gpointer" c:type="gpointer"/>
           </parameter>
@@ -70457,10 +70444,7 @@ object.</doc>
               <type name="SocketControlMessage"
                     c:type="GSocketControlMessage*"/>
             </parameter>
-            <parameter name="data"
-                       transfer-ownership="none"
-                       nullable="1"
-                       allow-none="1">
+            <parameter name="data" transfer-ownership="none">
               <doc xml:space="preserve">A buffer to write data to</doc>
               <type name="gpointer" c:type="gpointer"/>
             </parameter>
@@ -87328,10 +87312,7 @@ use in a #GHashTable or similar data structure.</doc>
         <type name="guint" c:type="guint"/>
       </return-value>
       <parameters>
-        <parameter name="icon"
-                   transfer-ownership="none"
-                   nullable="1"
-                   allow-none="1">
+        <parameter name="icon" transfer-ownership="none">
           <doc xml:space="preserve">#gconstpointer to an icon object.</doc>
           <type name="gpointer" c:type="gconstpointer"/>
         </parameter>
